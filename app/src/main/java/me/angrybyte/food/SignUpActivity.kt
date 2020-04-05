@@ -2,6 +2,8 @@ package me.angrybyte.food
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -12,44 +14,78 @@ class SignUpActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
 
+    private val inputChangeListener = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        override fun afterTextChanged(s: Editable?) {
+            validateForm()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
         auth = FirebaseAuth.getInstance()
+        validateForm()
 
-        btn_sign_up.setOnClickListener(){
+        tv_username_signup.addTextChangedListener(inputChangeListener)
+        tv_password_signup.addTextChangedListener(inputChangeListener)
+        tv_passwordConfirm_signup.addTextChangedListener(inputChangeListener)
+
+        btn_sign_up_signup.setOnClickListener(){
             signUpUser()
         }
     }
 
-    private fun signUpUser() {
-        if(tv_username.text.toString().isEmpty()){
-            email_TIL.error = "Enter your email"
-            tv_username.requestFocus()
-            return
-        }
+    private fun validateForm() {
 
-        if(!Patterns.EMAIL_ADDRESS.matcher(tv_username.text.toString()).matches()) {
-            email_TIL.error = "Enter valid email"
-            tv_username.requestFocus()
-            return
-        }
+        val isEmailValid = Patterns.EMAIL_ADDRESS.matcher(tv_username_signup.text.toString()).matches()
+        val  passNotValid = tv_password_signup.text.toString().isEmpty()
+        val isPassConfValid =  tv_passwordConfirm_signup.text.toString().equals(tv_password_signup.text.toString()) && tv_passwordConfirm_signup.text.toString().isNotEmpty()
 
-        if(tv_password.text.toString().isEmpty()) {
-            email_TIL.error = "Enter email"
-            tv_password.requestFocus()
-            return
-        }
+        email_TIL_signup.isErrorEnabled = !isEmailValid
+        password_TIL_signup.isErrorEnabled = passNotValid
+        passwordConfirm_TIL_signup.isErrorEnabled = !isPassConfValid
 
-        auth.createUserWithEmailAndPassword(tv_username.text.toString(), tv_password.text.toString())
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                   startActivity(Intent(this, MainActivity::class.java))
-                    finish()
-                } else {
-                    Toast.makeText(baseContext, "Process failed. Try again!",
-                        Toast.LENGTH_SHORT).show()
+                if (!isEmailValid) {
+                    email_TIL_signup.error = "Enter valid email formula!"
                 }
-            }
+
+                if (passNotValid) {
+                    password_TIL_signup.error = "Enter a password!"
+                }
+
+                if(!isPassConfValid) {
+                    passwordConfirm_TIL_signup.error = "Passwords mismatch!"
+                }
+
+        btn_sign_up_signup.isEnabled = isEmailValid && !passNotValid && isPassConfValid
     }
-}
+
+
+    private fun signUpUser() {
+            auth.createUserWithEmailAndPassword(
+                tv_username_signup.text.toString(),
+                tv_password_signup.text.toString()
+            ).addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                       // val auth = FirebaseAuth.getInstance()
+                        val user = auth.currentUser
+
+                        user?.sendEmailVerification()
+                            ?.addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    startActivity(Intent(this, MainActivity::class.java))
+                                    finish()
+                                }
+                            }
+                    } else {
+                        Toast.makeText(
+                            baseContext, "Process failed!. Try again!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+        }
+    }
+

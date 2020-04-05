@@ -17,13 +17,13 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:gravity="center"
-            android:text="Create an account"
+            android:text="@string/create_an_account"
             android:textColor="@color/colorPrimary"
             android:textSize="24sp"
             android:padding="30dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/email_TIL"
+            android:id="@+id/email_TIL_signup"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,28 +32,46 @@
             android:hint="@string/email">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tv_username"
+                android:id="@+id/tv_username_signup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/password_TIL"
+            android:id="@+id/password_TIL_signup"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:errorEnabled="true"
+            app:errorTextColor="@color/colorAccent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tv_password"
+                android:id="@+id/tv_password_signup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordConfirm_TIL_signup"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:errorEnabled="true"
+            app:errorTextColor="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password_confirm">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tv_passwordConfirm_signup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_sign_up"
+            android:id="@+id/btn_sign_up_signup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
