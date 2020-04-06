@@ -26,6 +26,10 @@ class MainActivity : AppCompatActivity() {
             doLogin()
         }
 
+        btn_login_without_profile.setOnClickListener {
+            startActivity(Intent(this, DashboardActivity::class.java))
+        }
+
     }
 
     public override fun onStart() {
@@ -44,6 +48,7 @@ class MainActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT).show()
             }
         } else {
+            if(!tv_username_signin.text.toString().isEmpty())
             Toast.makeText(baseContext, "Error. Wrong username or password.",
                 Toast.LENGTH_SHORT).show()
         }

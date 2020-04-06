@@ -69,9 +69,7 @@ class SignUpActivity : AppCompatActivity() {
                 tv_password_signup.text.toString()
             ).addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                       // val auth = FirebaseAuth.getInstance()
                         val user = auth.currentUser
-
                         user?.sendEmailVerification()
                             ?.addOnCompleteListener { task ->
                                 if (task.isSuccessful) {
