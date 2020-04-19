@@ -23,7 +23,7 @@ class DashboardActivity : AppCompatActivity() {
        ///TODO make sing out button and fuction, make button only available if the user previuosly logged in, and then start main activity, here is the function for logging out: FirebaseAuth.getInstance().signOut();
 
         btn_breakfast.setOnClickListener {
-            //startActivity(Intent(this, MainActivity::class.java))  ///TODO breakfast activity
+            startActivity(Intent(this, MealItemActivity::class.java))  ///TODO breakfast activity
     }
 
         btn_lunch.setOnClickListener {

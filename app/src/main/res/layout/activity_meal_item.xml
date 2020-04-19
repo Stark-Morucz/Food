@@ -7,13 +7,13 @@
     tools:context=".CookBookActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_cookbook"
+        android:id="@+id/rv_meal_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_cook_book"
+        android:id="@+id/fab_meal_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

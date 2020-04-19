@@ -13,4 +13,6 @@
     <string name="dinner_menu">Dinner</string>
     <string name="own_ideas_menu">Own ideas</string>
     <string name="no_login_enter">Countinue without sign in</string>
+    <string name="add_new_category_name">Category name</string>
+    <string name="add_new_meal_item">Food name</string>
 </resources>
