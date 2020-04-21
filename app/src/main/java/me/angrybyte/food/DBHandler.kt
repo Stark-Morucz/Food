@@ -140,6 +140,10 @@ class DBHandler(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null,
         cv.put(COL_IS_COMPLETED, item.isCompleted)
 
         db.update(TABLE_MEAL_ITEM, cv, "$COL_ID=?", arrayOf(item.id.toString()))
+    }
 
+    fun deleteMealItem(mealItemId : Long){
+        val db = writableDatabase
+        db.delete(TABLE_MEAL_ITEM, "$COL_ID=?", arrayOf(mealItemId.toString()))
     }
 }

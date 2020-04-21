@@ -8,12 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_cook_book2.*
@@ -32,7 +32,7 @@ class CookBookActivity : AppCompatActivity() {
         rv_cookbook.layoutManager = LinearLayoutManager(this)
 
         fab_cook_book.setOnClickListener {
-            val dialog = AlertDialog.Builder(this)
+            val dialog = MaterialAlertDialogBuilder(this)
             dialog.setTitle("Adding new category")
             val view = layoutInflater.inflate(R.layout.dialog_cook_book, null)
             val categoryName = view.findViewById<TextInputEditText>(R.id.tv_cookbook)
@@ -57,7 +57,7 @@ class CookBookActivity : AppCompatActivity() {
     }
 
     fun updateCategoryName(category: Category){
-        val dialog = AlertDialog.Builder(this)
+        val dialog = MaterialAlertDialogBuilder(this)
         dialog.setTitle("Updating category")
         val view = layoutInflater.inflate(R.layout.dialog_cook_book, null)
         val categoryName = view.findViewById<TextInputEditText>(R.id.tv_cookbook)

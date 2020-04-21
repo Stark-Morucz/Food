@@ -1,17 +1,17 @@
 package me.angrybyte.food
 
-import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.checkbox.MaterialCheckBox
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.activity_meal_item.*
 import me.angrybyte.food.DTS.MealItem
@@ -32,7 +32,7 @@ class MealItemActivity : AppCompatActivity() {
 
 
         fab_meal_item.setOnClickListener {
-            val dialog = AlertDialog.Builder(this)
+            val dialog = MaterialAlertDialogBuilder(this)
             dialog.setTitle("Adding new meal")
             val view = layoutInflater.inflate(R.layout.dialog_meal_item, null)
             val foodItem = view.findViewById<TextInputEditText>(R.id.tv_mealItem)
@@ -59,14 +59,34 @@ class MealItemActivity : AppCompatActivity() {
         refreshing()
     }
 
-    private fun refreshing() {
-        rv_meal_item.adapter = MealItemAdapter(this, dbHandler, dbHandler.getMealItems(categoryId))
+    fun updateMealItemName(item : MealItem){
+        val dialog = MaterialAlertDialogBuilder(this)
+        dialog.setTitle("Editing meal")
+        val view = layoutInflater.inflate(R.layout.dialog_meal_item, null)
+        val foodItem = view.findViewById<TextInputEditText>(R.id.tv_mealItem)
+        foodItem.setText(item.name)
+        dialog.setView(view)
+        dialog.setPositiveButton("OK") { _: DialogInterface, _: Int ->
+            if (foodItem.text.toString().isNotEmpty()) {
+                item.name = foodItem.text.toString()
+                item.MealItemId = categoryId
+                item.isCompleted = false
+                dbHandler.updateMealItem(item)
+                refreshing()
+            }
+        }
+        dialog.setNegativeButton("Cancel") { _: DialogInterface, _: Int -> }
+        dialog.show()
     }
 
-    class MealItemAdapter(val context: Context, val dbHandler: DBHandler, val list: MutableList<MealItem>) : RecyclerView.Adapter<MealItemAdapter.ViewHolder>(){
+    private fun refreshing() {
+        rv_meal_item.adapter = MealItemAdapter(this, dbHandler.getMealItems(categoryId))
+    }
+
+    class MealItemAdapter(val activity: MealItemActivity, val list: MutableList<MealItem>) : RecyclerView.Adapter<MealItemAdapter.ViewHolder>(){
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            return ViewHolder(LayoutInflater.from(context).inflate(R.layout.rv_child_meal_item, parent, false))
+            return ViewHolder(LayoutInflater.from(activity).inflate(R.layout.rv_child_meal_item, parent, false))
         }
 
         override fun getItemCount(): Int {
@@ -78,12 +98,30 @@ class MealItemActivity : AppCompatActivity() {
             holder.mealItemName.isChecked = list[position].isCompleted
             holder.mealItemName.setOnClickListener{
                 list[position].isCompleted = !list[position].isCompleted
-                dbHandler.updateMealItem(list[position])
+                activity.dbHandler.updateMealItem(list[position])
+            }
+            holder.deleteBtn.setOnClickListener{
+                val dialog = MaterialAlertDialogBuilder(activity)
+                dialog.setTitle("Deleting meal item")
+                dialog.setMessage("Are you sure, you want to delete this meal?")
+                dialog.setPositiveButton("Yes") { _: DialogInterface, _: Int ->
+                    activity.dbHandler.deleteMealItem(list[position].id)
+                    activity.refreshing()
+                }
+                dialog.setNegativeButton("Cancel") { _: DialogInterface, _: Int -> }
+                dialog.show()
+            }
+
+            holder.editBtn.setOnClickListener{
+                activity.updateMealItemName(list[position])
+                activity.refreshing()
             }
         }
 
         class ViewHolder(v : View) : RecyclerView.ViewHolder(v){
             val mealItemName : MaterialCheckBox = v.findViewById(R.id.cb_meal_item)
+            val deleteBtn : ImageView = v.findViewById(R.id.iv_delete)
+            val editBtn : ImageView = v.findViewById(R.id.iv_edit)
         }
     }
 
