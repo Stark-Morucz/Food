@@ -26,7 +26,6 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
         auth = FirebaseAuth.getInstance()
-        validateForm()
 
         tv_username_signup.addTextChangedListener(inputChangeListener)
         tv_password_signup.addTextChangedListener(inputChangeListener)
@@ -37,10 +36,10 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    private fun validateForm() {
+    private fun validateForm() : Boolean {
 
         val isEmailValid = Patterns.EMAIL_ADDRESS.matcher(tv_username_signup.text.toString()).matches()
-        val  passNotValid = tv_password_signup.text.toString().isEmpty()
+        val passNotValid = tv_password_signup.text.toString().isEmpty()
         val isPassConfValid =  tv_passwordConfirm_signup.text.toString().equals(tv_password_signup.text.toString()) && tv_passwordConfirm_signup.text.toString().isNotEmpty()
 
         email_TIL_signup.isErrorEnabled = !isEmailValid
@@ -60,10 +59,12 @@ class SignUpActivity : AppCompatActivity() {
                 }
 
         btn_sign_up_signup.isEnabled = isEmailValid && !passNotValid && isPassConfValid
+        return isEmailValid && !passNotValid && isPassConfValid
     }
 
 
     private fun signUpUser() {
+        if(!validateForm()) return
             auth.createUserWithEmailAndPassword(
                 tv_username_signup.text.toString(),
                 tv_password_signup.text.toString()

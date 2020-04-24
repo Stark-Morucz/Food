@@ -28,7 +28,11 @@ class DBHandler(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null,
                     "$COL_CREATED_AT datetime DEFAULT CURRENT_TIMESTAMP," +
                     "$COL_MEAL_ITEM_ID integer," +
                     "$COL_MEAL_ITEM_NAME varchar," +
-                    "$COL_IS_COMPLETED integer);"
+                    "$COL_IS_COMPLETED integer," +
+                    "$COL_CALORY integer," +
+                    "$COL_PROTEIN integer," +
+                    "$COL_CARB integer," +
+                    "$COL_FAT integer);"
 
         db.execSQL(createCategoryTable)
         db.execSQL(createMealItemTable)
@@ -82,7 +86,7 @@ class DBHandler(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null,
     fun getCategories(USERID : String) : MutableList<Category> {
         val result : MutableList<Category> = ArrayList()
         val db = readableDatabase
-        val queryResult = db.rawQuery("SELECT * from $TABLE_CATEGORY  ", null)
+        val queryResult = db.rawQuery("SELECT * from $TABLE_CATEGORY  where $COL_MADEBY=?", arrayOf(USERID))
 
         if(queryResult.moveToFirst()){
             do {
@@ -104,6 +108,10 @@ class DBHandler(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null,
         cv.put(COL_MEAL_ITEM_NAME, item.name)
         cv.put(COL_MEAL_ITEM_ID, item.MealItemId)
         cv.put(COL_IS_COMPLETED, item.isCompleted)
+        cv.put(COL_CALORY, item.Cal)
+        cv.put(COL_PROTEIN, item.Protein)
+        cv.put(COL_CARB, item.Carb)
+        cv.put(COL_FAT, item.Fat)
 
         val result = db.insert(TABLE_MEAL_ITEM, null, cv)
         return result != (-1).toLong()
@@ -124,6 +132,10 @@ class DBHandler(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null,
                 item.isCompleted =
                     queryResult.getInt(queryResult.getColumnIndex(COL_IS_COMPLETED)) == 1
                 item.MealItemId = mealItemId
+                item.Cal = queryResult.getLong((queryResult.getColumnIndex(COL_CALORY)))
+                item.Protein = queryResult.getLong((queryResult.getColumnIndex(COL_PROTEIN)))
+                item.Carb = queryResult.getLong((queryResult.getColumnIndex(COL_CARB)))
+                item.Fat= queryResult.getLong((queryResult.getColumnIndex(COL_FAT)))
                 result.add(item)
             } while (queryResult.moveToNext())
         }
@@ -138,6 +150,10 @@ class DBHandler(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null,
         cv.put(COL_MEAL_ITEM_NAME, item.name)
         cv.put(COL_MEAL_ITEM_ID, item.MealItemId)
         cv.put(COL_IS_COMPLETED, item.isCompleted)
+        cv.put(COL_CALORY, item.Cal)
+        cv.put(COL_PROTEIN, item.Protein)
+        cv.put(COL_CARB, item.Carb)
+        cv.put(COL_FAT, item.Fat)
 
         db.update(TABLE_MEAL_ITEM, cv, "$COL_ID=?", arrayOf(item.id.toString()))
     }

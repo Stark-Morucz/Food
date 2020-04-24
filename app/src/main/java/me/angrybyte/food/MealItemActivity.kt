@@ -36,6 +36,10 @@ class MealItemActivity : AppCompatActivity() {
             dialog.setTitle("Adding new meal")
             val view = layoutInflater.inflate(R.layout.dialog_meal_item, null)
             val foodItem = view.findViewById<TextInputEditText>(R.id.tv_mealItem)
+            val cal = view.findViewById<TextInputEditText>(R.id.tv_calory)
+            val fat = view.findViewById<TextInputEditText>(R.id.tv_fat)
+            val carb = view.findViewById<TextInputEditText>(R.id.tv_carb)
+            val protein = view.findViewById<TextInputEditText>(R.id.tv_protein)
             dialog.setView(view)
             dialog.setPositiveButton("OK") { _: DialogInterface, _: Int ->
                 if (foodItem.text.toString().isNotEmpty()) {
@@ -43,13 +47,15 @@ class MealItemActivity : AppCompatActivity() {
                     item.name = foodItem.text.toString()
                     item.MealItemId = categoryId
                     item.isCompleted = false
+                    item.Cal = cal.text.toString().toLong()
+                    item.Protein = protein.text.toString().toLong()
+                    item.Carb = carb.text.toString().toLong()
+                    item.Fat = fat.text.toString().toLong()
                     dbHandler.addMealItem(item)
                     refreshing()
                 }
             }
-            dialog.setNegativeButton("Cancel") { _: DialogInterface, _: Int ->
-
-            }
+            dialog.setNegativeButton("Cancel") { _: DialogInterface, _: Int -> }
             dialog.show()
         }
     }
@@ -65,12 +71,26 @@ class MealItemActivity : AppCompatActivity() {
         val view = layoutInflater.inflate(R.layout.dialog_meal_item, null)
         val foodItem = view.findViewById<TextInputEditText>(R.id.tv_mealItem)
         foodItem.setText(item.name)
+
+        val cal = view.findViewById<TextInputEditText>(R.id.tv_calory)
+        cal.setText(item.Cal.toString())
+        val fat = view.findViewById<TextInputEditText>(R.id.tv_fat)
+        fat.setText(item.Fat.toString())
+        val carb = view.findViewById<TextInputEditText>(R.id.tv_carb)
+        carb.setText(item.Carb.toString())
+        val protein = view.findViewById<TextInputEditText>(R.id.tv_protein)
+        protein.setText(item.Protein.toString())
+
         dialog.setView(view)
         dialog.setPositiveButton("OK") { _: DialogInterface, _: Int ->
             if (foodItem.text.toString().isNotEmpty()) {
                 item.name = foodItem.text.toString()
                 item.MealItemId = categoryId
                 item.isCompleted = false
+                item.Cal = cal.text.toString().toLong()
+                item.Carb = carb.text.toString().toLong()
+                item.Fat = fat.text.toString().toLong()
+                item.Protein = protein.text.toString().toLong()
                 dbHandler.updateMealItem(item)
                 refreshing()
             }
@@ -100,6 +120,21 @@ class MealItemActivity : AppCompatActivity() {
                 list[position].isCompleted = !list[position].isCompleted
                 activity.dbHandler.updateMealItem(list[position])
             }
+
+            holder.mealItemName.setOnLongClickListener {
+                val dialog = MaterialAlertDialogBuilder(activity)
+                dialog.setTitle(list[position].name)
+                dialog.setMessage(
+                        "Calory: " + list[position].Cal + " kcal\n" +
+                        "Protein: " + list[position].Protein +  " g\n" +
+                        "Carbohydrate: " + list[position].Carb + " g\n" +
+                        "Fat: " + list[position].Fat + " g"
+                )
+                dialog.setPositiveButton("OK") { _: DialogInterface, _: Int -> }
+                dialog.show()
+                true
+            }
+
             holder.deleteBtn.setOnClickListener{
                 val dialog = MaterialAlertDialogBuilder(activity)
                 dialog.setTitle("Deleting meal item")

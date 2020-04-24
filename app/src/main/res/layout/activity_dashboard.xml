@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:weightSum="4"
-    tools:context=".DashboardActivity"
-    >
+    tools:context=".DashboardActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -101,6 +101,16 @@
             android:textColor="#FFF"
             android:background="@color/colorPrimary"
             android:textSize="36sp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_signOut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="9dp"
+            android:src="@drawable/ic_exit"
+            app:backgroundTint="@color/colorPrimary"
+            android:tint="@android:color/white"
+            android:layout_gravity="end|bottom" />
 
     </FrameLayout>
 

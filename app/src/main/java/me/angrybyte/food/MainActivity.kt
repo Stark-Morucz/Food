@@ -2,6 +2,8 @@ package me.angrybyte.food
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -13,10 +15,21 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
 
+    private val inputChangeListener = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        override fun afterTextChanged(s: Editable?) {
+            validateForm()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         auth = FirebaseAuth.getInstance()
+
+        tv_username_signin.addTextChangedListener(inputChangeListener)
+        tv_password_signin.addTextChangedListener(inputChangeListener)
 
         btn_sign_up_signin.setOnClickListener {
             startActivity(Intent(this, SignUpActivity::class.java))
@@ -54,24 +67,33 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun doLogin() {
-        if(tv_username_signin.text.toString().isEmpty()){
+    private fun validateForm() : Boolean {
+
+        val isUserNameValid = tv_username_signin.text.toString().isNotEmpty()
+        val isEmailValid = Patterns.EMAIL_ADDRESS.matcher(tv_username_signin.text.toString()).matches()
+        val isPassValid =  tv_password_signin.text.toString().isNotEmpty()
+
+        email_TIL_signin.isErrorEnabled = !isUserNameValid || !isEmailValid
+        password_TIL_signin.isErrorEnabled = !isPassValid
+
+        if (!isUserNameValid) {
             email_TIL_signin.error = "Enter your email!"
-            tv_username_signin.requestFocus()
-            return
         }
 
-        if(!Patterns.EMAIL_ADDRESS.matcher(tv_username_signin.text.toString()).matches()) {
-            email_TIL_signin.error = "Enter valid email formula!"
-            tv_username_signin.requestFocus()
-            return
+        if (!isEmailValid) {
+            email_TIL_signin.error = "Enter a valid email formula"
         }
 
-        if(tv_password_signin.text.toString().isEmpty()) {
+        if(!isPassValid) {
             password_TIL_signin.error = "Enter password!"
-            tv_password_signin.requestFocus()
-            return
         }
+
+        btn_log_in_signin.isEnabled = isEmailValid && isUserNameValid && isPassValid
+        return isEmailValid && isUserNameValid && isPassValid
+    }
+
+    fun doLogin() {
+        if(!validateForm()) return
 
         auth.signInWithEmailAndPassword(tv_username_signin.text.toString(), tv_password_signin.text.toString())
             .addOnCompleteListener(this) { task ->

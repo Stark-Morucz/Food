@@ -107,8 +107,15 @@ class CookBookActivity : AppCompatActivity() {
                             activity.updateCategoryName(list[position])
                         }
                         R.id.menu_delete->{
-                            activity.dbHandler.deleteCategory(list[position].id)
-                            activity.refreshing()
+                            val dialog = MaterialAlertDialogBuilder(activity)
+                            dialog.setTitle("Deleting category")
+                            dialog.setMessage("Deleting this category will also delete meals inside!")
+                            dialog.setPositiveButton("Delete") { _: DialogInterface, _: Int ->
+                                activity.dbHandler.deleteCategory(list[position].id)
+                                activity.refreshing()
+                            }
+                            dialog.setNegativeButton("Cancel") { _: DialogInterface, _: Int -> }
+                            dialog.show()
                         }
                         R.id.menu_complete->{
                             activity.dbHandler.markComplete(list[position].id)
