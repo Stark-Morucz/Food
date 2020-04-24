@@ -15,4 +15,8 @@
     <string name="no_login_enter">Countinue without sign in</string>
     <string name="add_new_category_name">Category name</string>
     <string name="add_new_meal_item">Food name</string>
+    <string name="calorie_value_mealitem">Calorie</string>
+    <string name="carbohydrate_value_mealitem">Carbohydrate</string>
+    <string name="fat_value_mealitem">Fat</string>
+    <string name="protein_value_mealitem">Protein</string>
 </resources>

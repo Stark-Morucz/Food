@@ -35,7 +35,7 @@ class LunchActivity : AppCompatActivity() {
         details.add("Carbohydrate: 62g,\nProtein: 13g,\nCaloria: 389 kcal,\nFat: 8.3g")
     }
 
-    class LunchAdapter(val items: ArrayList<String>, val details: ArrayList<String>, val context: Context) : RecyclerView.Adapter<LunchActivity.LunchAdapter.ViewHolder>() {
+    class LunchAdapter(val items: ArrayList<String>, val details: ArrayList<String>, val context: Context) : RecyclerView.Adapter<LunchAdapter.ViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             return ViewHolder(
