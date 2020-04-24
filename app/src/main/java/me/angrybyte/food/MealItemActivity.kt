@@ -30,7 +30,6 @@ class MealItemActivity : AppCompatActivity() {
         dbHandler = DBHandler(this)
         rv_meal_item.layoutManager = LinearLayoutManager(this)
 
-
         fab_meal_item.setOnClickListener {
             val dialog = MaterialAlertDialogBuilder(this)
             dialog.setTitle("Adding new meal")

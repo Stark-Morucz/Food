@@ -42,15 +42,15 @@ class DashboardActivity : AppCompatActivity() {
         }
 
         btn_breakfast.setOnClickListener {
-            startActivity(Intent(this, MealItemActivity::class.java))  ///TODO breakfast activity
+            startActivity(Intent(this, BreakfastActivity::class.java))
          }
 
         btn_lunch.setOnClickListener {
-           // startActivity(Intent(this, MainActivity::class.java))  ///TODO lunch activity
+            startActivity(Intent(this, LunchActivity::class.java))
         }
 
         btn_dinner.setOnClickListener {
-           // startActivity(Intent(this, MainActivity::class.java))  ///TODO dinner activity
+            startActivity(Intent(this, DinnerActivity::class.java))
         }
     }
 
