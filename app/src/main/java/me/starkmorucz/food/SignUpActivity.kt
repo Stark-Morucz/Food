@@ -1,4 +1,4 @@
-package me.angrybyte.food
+package me.starkmorucz.food
 
 import android.content.Intent
 import android.os.Bundle

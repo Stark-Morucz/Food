@@ -1,4 +1,4 @@
-package me.angrybyte.food
+package me.starkmorucz.food
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry

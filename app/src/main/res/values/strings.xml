@@ -5,7 +5,7 @@
     <string name="sign_up">Sign Up</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="application_name">Application name</string>
+    <string name="application_name">Food</string>
     <string name="create_an_account">Create an account</string>
     <string name="password_confirm">Password confrim</string>
     <string name="breakfast_menu">Breakfast</string>
@@ -19,4 +19,5 @@
     <string name="carbohydrate_value_mealitem">Carbohydrate</string>
     <string name="fat_value_mealitem">Fat</string>
     <string name="protein_value_mealitem">Protein</string>
+    <string name="default_value_naturals">0</string>
 </resources>

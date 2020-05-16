@@ -1,4 +1,4 @@
-package me.angrybyte.food
+package me.starkmorucz.food
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

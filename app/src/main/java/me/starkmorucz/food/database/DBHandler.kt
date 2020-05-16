@@ -1,15 +1,18 @@
-package me.angrybyte.food
+package me.starkmorucz.food.database
 
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.google.firebase.auth.FirebaseAuth
-import me.angrybyte.food.DTS.Category
-import me.angrybyte.food.DTS.MealItem
+import me.starkmorucz.food.DataClasses.Category
+import me.starkmorucz.food.DataClasses.MealItem
 
 
-class DBHandler(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
+class DBHandler(val context: Context) : SQLiteOpenHelper(context,
+    DB_NAME, null,
+    DB_VERSION
+) {
 
     private lateinit var auth: FirebaseAuth
 
@@ -38,13 +41,11 @@ class DBHandler(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null,
         db.execSQL(createMealItemTable)
     }
 
-    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {  }
 
-    fun markComplete(mealItemId: Long) {
+    fun markComplete(Id: Long) {
         val db = readableDatabase
-        val queryResult = db.rawQuery("SELECT * FROM $TABLE_MEAL_ITEM WHERE $COL_MEAL_ITEM_ID=$mealItemId", null)
+        val queryResult = db.rawQuery("SELECT * FROM $TABLE_MEAL_ITEM WHERE $COL_MEAL_ITEM_ID=$Id", null)
 
         if (queryResult.moveToFirst()) {
             do {
@@ -117,11 +118,11 @@ class DBHandler(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null,
         return result != (-1).toLong()
     }
 
-    fun getMealItems(mealItemId : Long) : MutableList<MealItem> {
+    fun getMealItems(categoryItemId : Long) : MutableList<MealItem> {
         val result : MutableList<MealItem> = ArrayList()
 
         val db = readableDatabase
-        val queryResult = db.rawQuery("SELECT * FROM $TABLE_MEAL_ITEM WHERE $COL_MEAL_ITEM_ID=$mealItemId", null)
+        val queryResult = db.rawQuery("SELECT * FROM $TABLE_MEAL_ITEM WHERE $COL_MEAL_ITEM_ID=$categoryItemId", null)
 
         if (queryResult.moveToFirst()) {
             do {
@@ -131,7 +132,7 @@ class DBHandler(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null,
                 item.name = queryResult.getString(queryResult.getColumnIndex(COL_MEAL_ITEM_NAME))
                 item.isCompleted =
                     queryResult.getInt(queryResult.getColumnIndex(COL_IS_COMPLETED)) == 1
-                item.MealItemId = mealItemId
+                item.MealItemId = categoryItemId
                 item.Cal = queryResult.getLong((queryResult.getColumnIndex(COL_CALORY)))
                 item.Protein = queryResult.getLong((queryResult.getColumnIndex(COL_PROTEIN)))
                 item.Carb = queryResult.getLong((queryResult.getColumnIndex(COL_CARB)))

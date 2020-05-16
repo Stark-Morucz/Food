@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="me.angrybyte.food">
+    package="me.starkmorucz.food">
 
     <application
         android:allowBackup="true"
@@ -9,14 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DinnerActivity"></activity>
-        <activity android:name=".LunchActivity" />
-        <activity android:name=".BreakfastActivity" />
-        <activity android:name=".MealItemActivity" />
-        <activity android:name=".CookBookActivity" />
-        <activity android:name=".DashboardActivity" />
-        <activity android:name=".SignUpActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name="me.starkmorucz.food.role.guest.DinnerActivity"></activity>
+        <activity android:name="me.starkmorucz.food.role.guest.LunchActivity" />
+        <activity android:name="me.starkmorucz.food.role.guest.BreakfastActivity" />
+        <activity android:name="me.starkmorucz.food.role.user.MealItemActivity" />
+        <activity android:name="me.starkmorucz.food.role.user.CookBookActivity" />
+        <activity android:name="me.starkmorucz.food.DashboardActivity" />
+        <activity android:name="me.starkmorucz.food.SignUpActivity" />
+        <activity android:name="me.starkmorucz.food.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

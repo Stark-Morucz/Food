@@ -1,4 +1,4 @@
-package me.angrybyte.food
+package me.starkmorucz.food.role.user
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -14,7 +14,11 @@ import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.activity_meal_item.*
-import me.angrybyte.food.DTS.MealItem
+import me.starkmorucz.food.DataClasses.MealItem
+import me.starkmorucz.food.R
+import me.starkmorucz.food.database.DBHandler
+import me.starkmorucz.food.database.INTENT_CATEGORY_ID
+import me.starkmorucz.food.database.INTENT_CATEGORY_NAME
 
 class MealItemActivity : AppCompatActivity() {
 
@@ -42,17 +46,23 @@ class MealItemActivity : AppCompatActivity() {
             dialog.setView(view)
             dialog.setPositiveButton("OK") { _: DialogInterface, _: Int ->
                 if (foodItem.text.toString().isNotEmpty()) {
+
                     val item = MealItem()
                     item.name = foodItem.text.toString()
                     item.MealItemId = categoryId
                     item.isCompleted = false
-                    item.Cal = cal.text.toString().toLong()
-                    item.Protein = protein.text.toString().toLong()
-                    item.Carb = carb.text.toString().toLong()
-                    item.Fat = fat.text.toString().toLong()
-                    dbHandler.addMealItem(item)
-                    refreshing()
-                }
+
+                        item.Cal = cal.text.toString().toLong()
+
+                        item.Protein = protein.text.toString().toLong()
+
+                        item.Carb = carb.text.toString().toLong()
+
+                        item.Fat = fat.text.toString().toLong()
+
+                        dbHandler.addMealItem(item)
+                        refreshing()
+                    }
             }
             dialog.setNegativeButton("Cancel") { _: DialogInterface, _: Int -> }
             dialog.show()
@@ -86,10 +96,27 @@ class MealItemActivity : AppCompatActivity() {
                 item.name = foodItem.text.toString()
                 item.MealItemId = categoryId
                 item.isCompleted = false
-                item.Cal = cal.text.toString().toLong()
-                item.Carb = carb.text.toString().toLong()
-                item.Fat = fat.text.toString().toLong()
-                item.Protein = protein.text.toString().toLong()
+
+                if(cal.text.toString().isNotEmpty())
+                    item.Cal = cal.text.toString().toLong()
+                else
+                    item.Cal = 0
+
+                if(carb.text.toString().isNotEmpty())
+                    item.Carb = carb.text.toString().toLong()
+                else
+                    item.Carb = 0
+
+                if(fat.text.toString().isNotEmpty())
+                    item.Fat = fat.text.toString().toLong()
+                else
+                    item.Fat = 0
+
+                if(protein.text.toString().isNotEmpty())
+                    item.Protein = protein.text.toString().toLong()
+                else
+                    item.Protein = 0
+
                 dbHandler.updateMealItem(item)
                 refreshing()
             }
@@ -99,13 +126,23 @@ class MealItemActivity : AppCompatActivity() {
     }
 
     private fun refreshing() {
-        rv_meal_item.adapter = MealItemAdapter(this, dbHandler.getMealItems(categoryId))
+        rv_meal_item.adapter =
+            MealItemAdapter(
+                this,
+                dbHandler.getMealItems(categoryId)
+            )
     }
 
     class MealItemAdapter(val activity: MealItemActivity, val list: MutableList<MealItem>) : RecyclerView.Adapter<MealItemAdapter.ViewHolder>(){
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            return ViewHolder(LayoutInflater.from(activity).inflate(R.layout.rv_child_meal_item, parent, false))
+            return ViewHolder(
+                LayoutInflater.from(activity).inflate(
+                    R.layout.recycler_meal_item,
+                    parent,
+                    false
+                )
+            )
         }
 
         override fun getItemCount(): Int {

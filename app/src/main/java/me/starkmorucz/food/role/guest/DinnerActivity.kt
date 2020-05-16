@@ -1,4 +1,4 @@
-package me.angrybyte.food
+package me.starkmorucz.food.role.guest
 
 import android.content.Context
 import android.os.Bundle
@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_dinner.*
+import me.starkmorucz.food.R
 
 class DinnerActivity : AppCompatActivity() {
 
@@ -20,7 +21,12 @@ class DinnerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dinner)
         rv_dinner.layoutManager = LinearLayoutManager(this)
-        rv_dinner.adapter = DinnerAdapter(meals, details, this)
+        rv_dinner.adapter =
+            DinnerAdapter(
+                meals,
+                details,
+                this
+            )
         addDinner()
     }
 
@@ -40,7 +46,7 @@ class DinnerActivity : AppCompatActivity() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             return ViewHolder(
                 LayoutInflater.from(context).inflate(
-                    R.layout.rv_fix_meals,
+                    R.layout.recycler_fix_meals,
                     parent,
                     false
                 )

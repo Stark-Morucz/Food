@@ -1,12 +1,13 @@
-package me.angrybyte.food
+package me.starkmorucz.food.database
 
 const val DB_NAME = "OwnIdeas123"
 const val DB_VERSION = 1
 
-const val TABLE_CATEGORY = "Category"
-
 const val COL_ID = "Id"
 const val COL_CREATED_AT = "CreatedAt"
+
+const val TABLE_CATEGORY = "Category"
+
 const val COL_NAME = "Name"
 const val COL_MADEBY = "Madeby"
 

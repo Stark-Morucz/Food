@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DinnerActivity">
+    tools:context=".role.guest.DinnerActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_dinner"

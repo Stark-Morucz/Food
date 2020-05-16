@@ -1,4 +1,4 @@
-package me.angrybyte.food
+package me.starkmorucz.food.role.user
 
 import android.content.DialogInterface
 import android.content.Intent
@@ -17,7 +17,11 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_cook_book2.*
-import me.angrybyte.food.DTS.Category
+import me.starkmorucz.food.DataClasses.Category
+import me.starkmorucz.food.R
+import me.starkmorucz.food.database.DBHandler
+import me.starkmorucz.food.database.INTENT_CATEGORY_ID
+import me.starkmorucz.food.database.INTENT_CATEGORY_NAME
 
 class CookBookActivity : AppCompatActivity() {
 
@@ -75,13 +79,23 @@ class CookBookActivity : AppCompatActivity() {
     }
 
     private fun refreshing(){
-        rv_cookbook.adapter = CookBookAdapter(this, dbHandler.getCategories(auth.currentUser?.getUid().toString()))
+        rv_cookbook.adapter =
+            CookBookAdapter(
+                this,
+                dbHandler.getCategories(auth.currentUser?.getUid().toString())
+            )
     }
 
     class CookBookAdapter(val activity: CookBookActivity, val list: MutableList<Category>) : RecyclerView.Adapter<CookBookAdapter.ViewHolder>(){
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            return ViewHolder(LayoutInflater.from(activity).inflate(R.layout.rv_child_cook_book, parent, false))
+            return ViewHolder(
+                LayoutInflater.from(activity).inflate(
+                    R.layout.recycler_cook_book,
+                    parent,
+                    false
+                )
+            )
         }
 
         override fun getItemCount(): Int {
@@ -103,10 +117,10 @@ class CookBookActivity : AppCompatActivity() {
                 popup.inflate(R.menu.cookbook_child)
                 popup.setOnMenuItemClickListener {
                     when(it.itemId){
-                        R.id.menu_edit->{
+                        R.id.menu_edit ->{
                             activity.updateCategoryName(list[position])
                         }
-                        R.id.menu_delete->{
+                        R.id.menu_delete ->{
                             val dialog = MaterialAlertDialogBuilder(activity)
                             dialog.setTitle("Deleting category")
                             dialog.setMessage("Deleting this category will also delete meals inside!")
@@ -117,7 +131,7 @@ class CookBookActivity : AppCompatActivity() {
                             dialog.setNegativeButton("Cancel") { _: DialogInterface, _: Int -> }
                             dialog.show()
                         }
-                        R.id.menu_complete->{
+                        R.id.menu_complete ->{
                             activity.dbHandler.markComplete(list[position].id)
                         }
                     }

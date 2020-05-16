@@ -1,4 +1,4 @@
-package me.angrybyte.food
+package me.starkmorucz.food
 
 import android.content.Intent
 import android.os.Bundle
@@ -62,8 +62,8 @@ class MainActivity : AppCompatActivity() {
             }
         } else {
             if(!tv_username_signin.text.toString().isEmpty())
-            Toast.makeText(baseContext, "Error. Wrong username or password.",
-                Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext, "Error. Wrong username or password.",
+                    Toast.LENGTH_SHORT).show()
         }
     }
 

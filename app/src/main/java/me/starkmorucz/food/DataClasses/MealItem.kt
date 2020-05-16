@@ -1,4 +1,4 @@
-package me.angrybyte.food.DTS
+package me.starkmorucz.food.DataClasses
 
 class MealItem(){
 

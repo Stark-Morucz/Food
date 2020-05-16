@@ -47,6 +47,7 @@
             android:id="@+id/tv_calory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/default_value_naturals"
             android:inputType="numberDecimal" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -68,6 +69,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tv_carb"
+            android:text="@string/default_value_naturals"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal" />
@@ -92,6 +94,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tv_fat"
             android:layout_width="match_parent"
+            android:text="@string/default_value_naturals"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal" />
 
@@ -116,6 +119,7 @@
             android:id="@+id/tv_protein"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/default_value_naturals"
             android:inputType="numberDecimal" />
 
     </com.google.android.material.textfield.TextInputLayout>

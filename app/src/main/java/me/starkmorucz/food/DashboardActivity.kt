@@ -1,4 +1,4 @@
-package me.angrybyte.food
+package me.starkmorucz.food
 
 import android.content.DialogInterface
 import android.content.Intent
@@ -7,6 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_dashboard.*
+import me.starkmorucz.food.role.guest.BreakfastActivity
+import me.starkmorucz.food.role.guest.DinnerActivity
+import me.starkmorucz.food.role.guest.LunchActivity
+import me.starkmorucz.food.role.user.CookBookActivity
 
 class DashboardActivity : AppCompatActivity() {
 
