@@ -62,7 +62,7 @@ class CookBookActivity : AppCompatActivity() {
 
     fun updateCategoryName(category: Category){
         val dialog = MaterialAlertDialogBuilder(this)
-        dialog.setTitle("Updating category")
+        dialog.setTitle("Updating " + category.name)
         val view = layoutInflater.inflate(R.layout.dialog_cook_book, null)
         val categoryName = view.findViewById<TextInputEditText>(R.id.tv_cookbook)
         categoryName.setText(category.name)
@@ -122,7 +122,7 @@ class CookBookActivity : AppCompatActivity() {
                         }
                         R.id.menu_delete ->{
                             val dialog = MaterialAlertDialogBuilder(activity)
-                            dialog.setTitle("Deleting category")
+                            dialog.setTitle("Deleting " + holder.cookBookName.text)
                             dialog.setMessage("Deleting this category will also delete meals inside!")
                             dialog.setPositiveButton("Delete") { _: DialogInterface, _: Int ->
                                 activity.dbHandler.deleteCategory(list[position].id)

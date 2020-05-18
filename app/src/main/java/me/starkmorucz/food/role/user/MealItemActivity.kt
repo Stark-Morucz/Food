@@ -76,7 +76,7 @@ class MealItemActivity : AppCompatActivity() {
 
     fun updateMealItemName(item : MealItem){
         val dialog = MaterialAlertDialogBuilder(this)
-        dialog.setTitle("Editing meal")
+        dialog.setTitle("Editing " + item.name);
         val view = layoutInflater.inflate(R.layout.dialog_meal_item, null)
         val foodItem = view.findViewById<TextInputEditText>(R.id.tv_mealItem)
         foodItem.setText(item.name)
@@ -173,7 +173,7 @@ class MealItemActivity : AppCompatActivity() {
 
             holder.deleteBtn.setOnClickListener{
                 val dialog = MaterialAlertDialogBuilder(activity)
-                dialog.setTitle("Deleting meal item")
+                dialog.setTitle("Deleting " + holder.mealItemName.text)
                 dialog.setMessage("Are you sure, you want to delete this meal?")
                 dialog.setPositiveButton("Yes") { _: DialogInterface, _: Int ->
                     activity.dbHandler.deleteMealItem(list[position].id)
