@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:492303660915:android:ea16d8e211fe66c8edb706",
         "android_client_info": {
-          "package_name": "me.angrybyte.food"
+          "package_name": "me.starkmorucz.food"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "492303660915-slt7ej7vkoade3pcavd0ial5ffckrsrc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "me.angrybyte.food",
+            "package_name": "me.starkmorucz.food",
             "certificate_hash": "95437ddefd65ee5fc53bf3962caf88029b5da791"
           }
         },

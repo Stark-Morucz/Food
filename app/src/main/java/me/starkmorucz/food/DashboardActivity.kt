@@ -30,14 +30,14 @@ class DashboardActivity : AppCompatActivity() {
 
         fab_signOut.setOnClickListener {
             val dialog = MaterialAlertDialogBuilder(this)
-            dialog.setTitle("Sign Out")
-            dialog.setMessage("Are you sure you want to sing out?")
-            dialog.setPositiveButton("OK") { _: DialogInterface, _: Int ->
+            dialog.setTitle(R.string.sign_out)
+            dialog.setMessage(R.string.sign_out_confirm)
+            dialog.setPositiveButton(R.string.alert_ok) { _: DialogInterface, _: Int ->
                 FirebaseAuth.getInstance().signOut()
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
             }
-            dialog.setNegativeButton("Cancel") { _: DialogInterface, _: Int -> }
+            dialog.setNegativeButton(R.string.alert_cancel) { _: DialogInterface, _: Int -> }
             dialog.show()
         }
 

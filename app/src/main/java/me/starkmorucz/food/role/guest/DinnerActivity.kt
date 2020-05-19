@@ -31,7 +31,7 @@ class DinnerActivity : AppCompatActivity() {
     }
 
     fun addDinner(){
-        meals.add("spinach omelette dinner")
+        meals.add("Spinach omelette dinner")
         details.add("Carbohydrate: 0.4g,\nProtein: 6.7g,\nCaloria: 78 kcal,\nFat: 5g")
         meals.add("Apple and cinnamon porridge with cottage cheese")
         details.add("Carbohydrate: 4.8g,\nProtein: 10.4g,\nCaloria: 82 kcal,\nFat: 2.5g")

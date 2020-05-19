@@ -25,6 +25,7 @@ class MealItemActivity : AppCompatActivity() {
     lateinit var dbHandler : DBHandler
     var categoryId : Long = -1
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -36,7 +37,7 @@ class MealItemActivity : AppCompatActivity() {
 
         fab_meal_item.setOnClickListener {
             val dialog = MaterialAlertDialogBuilder(this)
-            dialog.setTitle("Adding new meal")
+            dialog.setTitle(R.string.alert_adding_meal)
             val view = layoutInflater.inflate(R.layout.dialog_meal_item, null)
             val foodItem = view.findViewById<TextInputEditText>(R.id.tv_mealItem)
             val cal = view.findViewById<TextInputEditText>(R.id.tv_calory)
@@ -44,7 +45,7 @@ class MealItemActivity : AppCompatActivity() {
             val carb = view.findViewById<TextInputEditText>(R.id.tv_carb)
             val protein = view.findViewById<TextInputEditText>(R.id.tv_protein)
             dialog.setView(view)
-            dialog.setPositiveButton("OK") { _: DialogInterface, _: Int ->
+            dialog.setPositiveButton(R.string.alert_ok) { _: DialogInterface, _: Int ->
                 if (foodItem.text.toString().isNotEmpty()) {
 
                     val item = MealItem()
@@ -52,19 +53,30 @@ class MealItemActivity : AppCompatActivity() {
                     item.MealItemId = categoryId
                     item.isCompleted = false
 
+                    if(cal.text.toString().isNotEmpty())
                         item.Cal = cal.text.toString().toLong()
+                    else
+                        item.Cal = 0
 
-                        item.Protein = protein.text.toString().toLong()
-
+                    if(carb.text.toString().isNotEmpty())
                         item.Carb = carb.text.toString().toLong()
+                    else
+                        item.Carb = 0
 
+                    if(fat.text.toString().isNotEmpty())
                         item.Fat = fat.text.toString().toLong()
+                    else
+                        item.Fat = 0
 
+                    if(protein.text.toString().isNotEmpty())
+                        item.Protein = protein.text.toString().toLong()
+                    else
+                        item.Protein = 0
                         dbHandler.addMealItem(item)
                         refreshing()
                     }
             }
-            dialog.setNegativeButton("Cancel") { _: DialogInterface, _: Int -> }
+            dialog.setNegativeButton(R.string.alert_cancel) { _: DialogInterface, _: Int -> }
             dialog.show()
         }
     }
@@ -76,7 +88,8 @@ class MealItemActivity : AppCompatActivity() {
 
     fun updateMealItemName(item : MealItem){
         val dialog = MaterialAlertDialogBuilder(this)
-        dialog.setTitle("Editing " + item.name);
+
+        dialog.setTitle(getString(R.string.alert_edit) + item.name)
         val view = layoutInflater.inflate(R.layout.dialog_meal_item, null)
         val foodItem = view.findViewById<TextInputEditText>(R.id.tv_mealItem)
         foodItem.setText(item.name)
@@ -91,7 +104,7 @@ class MealItemActivity : AppCompatActivity() {
         protein.setText(item.Protein.toString())
 
         dialog.setView(view)
-        dialog.setPositiveButton("OK") { _: DialogInterface, _: Int ->
+        dialog.setPositiveButton(R.string.alert_ok) { _: DialogInterface, _: Int ->
             if (foodItem.text.toString().isNotEmpty()) {
                 item.name = foodItem.text.toString()
                 item.MealItemId = categoryId
@@ -121,7 +134,7 @@ class MealItemActivity : AppCompatActivity() {
                 refreshing()
             }
         }
-        dialog.setNegativeButton("Cancel") { _: DialogInterface, _: Int -> }
+        dialog.setNegativeButton(R.string.alert_cancel) { _: DialogInterface, _: Int -> }
         dialog.show()
     }
 
@@ -133,7 +146,8 @@ class MealItemActivity : AppCompatActivity() {
             )
     }
 
-    class MealItemAdapter(val activity: MealItemActivity, val list: MutableList<MealItem>) : RecyclerView.Adapter<MealItemAdapter.ViewHolder>(){
+    class MealItemAdapter(val activity: MealItemActivity, val list: MutableList<MealItem>) : RecyclerView.Adapter<MealItemAdapter.ViewHolder>() {
+
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             return ViewHolder(
@@ -160,26 +174,26 @@ class MealItemActivity : AppCompatActivity() {
             holder.mealItemName.setOnLongClickListener {
                 val dialog = MaterialAlertDialogBuilder(activity)
                 dialog.setTitle(list[position].name)
-                dialog.setMessage(
-                        "Calory: " + list[position].Cal + " kcal\n" +
-                        "Protein: " + list[position].Protein +  " g\n" +
-                        "Carbohydrate: " + list[position].Carb + " g\n" +
-                        "Fat: " + list[position].Fat + " g"
+                dialog.setMessage(holder.itemView.context.getString(R.string.neutrals,
+                      list[position].Cal,
+                      list[position].Protein,
+                      list[position].Carb,
+                      list[position].Fat)
                 )
-                dialog.setPositiveButton("OK") { _: DialogInterface, _: Int -> }
+                dialog.setPositiveButton(R.string.alert_ok) { _: DialogInterface, _: Int -> }
                 dialog.show()
                 true
             }
 
             holder.deleteBtn.setOnClickListener{
                 val dialog = MaterialAlertDialogBuilder(activity)
-                dialog.setTitle("Deleting " + holder.mealItemName.text)
-                dialog.setMessage("Are you sure, you want to delete this meal?")
-                dialog.setPositiveButton("Yes") { _: DialogInterface, _: Int ->
+                dialog.setTitle(holder.itemView.context.getString(R.string.alert_delete) + holder.mealItemName.text)
+                dialog.setMessage(R.string.alert_confirm)
+                dialog.setPositiveButton(R.string.alert_ok) { _: DialogInterface, _: Int ->
                     activity.dbHandler.deleteMealItem(list[position].id)
                     activity.refreshing()
                 }
-                dialog.setNegativeButton("Cancel") { _: DialogInterface, _: Int -> }
+                dialog.setNegativeButton(R.string.alert_cancel) { _: DialogInterface, _: Int -> }
                 dialog.show()
             }
 

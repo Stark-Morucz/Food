@@ -47,15 +47,15 @@ class SignUpActivity : AppCompatActivity() {
         passwordConfirm_TIL_signup.isErrorEnabled = !isPassConfValid
 
                 if (!isEmailValid) {
-                    email_TIL_signup.error = "Enter valid email formula!"
+                    email_TIL_signup.error = R.string.error_email_formula.toString()
                 }
 
                 if (passNotValid) {
-                    password_TIL_signup.error = "Enter a password!"
+                    password_TIL_signup.error = R.string.error_password.toString()
                 }
 
                 if(!isPassConfValid) {
-                    passwordConfirm_TIL_signup.error = "Passwords mismatch!"
+                    passwordConfirm_TIL_signup.error = R.string.error_password_match.toString()
                 }
 
         btn_sign_up_signup.isEnabled = isEmailValid && !passNotValid && isPassConfValid
@@ -80,7 +80,7 @@ class SignUpActivity : AppCompatActivity() {
                             }
                     } else {
                         Toast.makeText(
-                            baseContext, "Process failed!. Try again!",
+                            baseContext, R.string.error_process.toString(),
                             Toast.LENGTH_SHORT
                         ).show()
                     }

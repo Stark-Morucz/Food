@@ -57,12 +57,12 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, DashboardActivity::class.java))
                 finish()
             } else {
-                Toast.makeText(baseContext, "Email is not verified yet.",
+                Toast.makeText(baseContext, R.string.error_email_confirm.toString(),
                     Toast.LENGTH_SHORT).show()
             }
         } else {
             if(!tv_username_signin.text.toString().isEmpty())
-                Toast.makeText(baseContext, "Error. Wrong username or password.",
+                Toast.makeText(baseContext, R.string.error_credentials.toString(),
                     Toast.LENGTH_SHORT).show()
         }
     }
@@ -77,15 +77,15 @@ class MainActivity : AppCompatActivity() {
         password_TIL_signin.isErrorEnabled = !isPassValid
 
         if (!isUserNameValid) {
-            email_TIL_signin.error = "Enter your email!"
+            email_TIL_signin.error = R.string.error_email.toString()
         }
 
         if (!isEmailValid) {
-            email_TIL_signin.error = "Enter a valid email formula"
+            email_TIL_signin.error = R.string.error_email_formula.toString()
         }
 
         if(!isPassValid) {
-            password_TIL_signin.error = "Enter password!"
+            password_TIL_signin.error = R.string.error_password.toString()
         }
 
         btn_log_in_signin.isEnabled = isEmailValid && isUserNameValid && isPassValid

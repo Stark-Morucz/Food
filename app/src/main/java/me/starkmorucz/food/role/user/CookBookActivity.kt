@@ -37,11 +37,11 @@ class CookBookActivity : AppCompatActivity() {
 
         fab_cook_book.setOnClickListener {
             val dialog = MaterialAlertDialogBuilder(this)
-            dialog.setTitle("Adding new category")
+            dialog.setTitle(R.string.alert_adding_category)
             val view = layoutInflater.inflate(R.layout.dialog_cook_book, null)
             val categoryName = view.findViewById<TextInputEditText>(R.id.tv_cookbook)
             dialog.setView(view)
-            dialog.setPositiveButton("OK") { _: DialogInterface, _: Int ->
+            dialog.setPositiveButton(R.string.alert_ok) { _: DialogInterface, _: Int ->
                 if (categoryName.text.toString().isNotEmpty()) {
                     val category = Category()
                     category.name = categoryName.text.toString()
@@ -50,7 +50,7 @@ class CookBookActivity : AppCompatActivity() {
                     refreshing()
                 }
             }
-            dialog.setNegativeButton("Cancel") { _: DialogInterface, _: Int -> }
+            dialog.setNegativeButton(R.string.alert_cancel) { _: DialogInterface, _: Int -> }
             dialog.show()
         }
     }
@@ -62,19 +62,19 @@ class CookBookActivity : AppCompatActivity() {
 
     fun updateCategoryName(category: Category){
         val dialog = MaterialAlertDialogBuilder(this)
-        dialog.setTitle("Updating " + category.name)
+        dialog.setTitle(getString(R.string.alert_edit) + category.name)
         val view = layoutInflater.inflate(R.layout.dialog_cook_book, null)
         val categoryName = view.findViewById<TextInputEditText>(R.id.tv_cookbook)
         categoryName.setText(category.name)
         dialog.setView(view)
-        dialog.setPositiveButton("OK") { _: DialogInterface, _: Int ->
+        dialog.setPositiveButton(R.string.alert_ok) { _: DialogInterface, _: Int ->
             if (categoryName.text.toString().isNotEmpty()) {
                 category.name = categoryName.text.toString()
                 dbHandler.updateCategory(category)
                 refreshing()
             }
         }
-        dialog.setNegativeButton("Cancel") { _: DialogInterface, _: Int -> }
+        dialog.setNegativeButton(R.string.alert_cancel) { _: DialogInterface, _: Int -> }
         dialog.show()
     }
 
@@ -122,13 +122,13 @@ class CookBookActivity : AppCompatActivity() {
                         }
                         R.id.menu_delete ->{
                             val dialog = MaterialAlertDialogBuilder(activity)
-                            dialog.setTitle("Deleting " + holder.cookBookName.text)
-                            dialog.setMessage("Deleting this category will also delete meals inside!")
-                            dialog.setPositiveButton("Delete") { _: DialogInterface, _: Int ->
+                            dialog.setTitle(holder.itemView.context.getString(R.string.alert_delete) + holder.cookBookName.text)
+                            dialog.setMessage(R.string.alert_dialog_info)
+                            dialog.setPositiveButton(R.string.alert_delete) { _: DialogInterface, _: Int ->
                                 activity.dbHandler.deleteCategory(list[position].id)
                                 activity.refreshing()
                             }
-                            dialog.setNegativeButton("Cancel") { _: DialogInterface, _: Int -> }
+                            dialog.setNegativeButton(R.string.alert_cancel) { _: DialogInterface, _: Int -> }
                             dialog.show()
                         }
                         R.id.menu_complete ->{
